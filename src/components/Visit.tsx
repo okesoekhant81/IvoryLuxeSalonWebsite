@@ -1,6 +1,7 @@
 import Image from "next/image";
 import visitTeam from "../../public/images/visit-team.png";
 import { PrimaryCta } from "./Button";
+import Heading from "./Heading";
 
 const GOOGLE_MAPS_CID = "1898650786862607448";
 const GOOGLE_MAPS_LINK = "https://maps.app.goo.gl/u9dFQ24bkvQ7EDus5";
@@ -21,9 +22,7 @@ export default function Visit() {
 
         <div className="mt-10 md:mt-14 md:grid md:grid-cols-2 md:gap-16">
           <div>
-            <h2 className="font-serif-italic text-3xl leading-tight text-black md:text-5xl">
-              Visit <span className="block">Ivory Luxe Salon</span>
-            </h2>
+            <Heading eyebrow="Visit" emphasis="Ivory Luxe Salon" />
 
             <dl className="mt-8 space-y-5 text-sm leading-relaxed text-muted md:text-base">
               <div>

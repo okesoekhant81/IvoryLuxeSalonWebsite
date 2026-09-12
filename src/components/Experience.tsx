@@ -1,5 +1,6 @@
 import Image from "next/image";
 import experienceImg from "../../public/images/experience.png";
+import Heading from "./Heading";
 
 const features = [
   {
@@ -26,9 +27,7 @@ export default function Experience() {
       <section id="experience" className="scroll-mt-20 bg-beige pt-16 md:pt-20">
         <div className="mx-auto max-w-6xl px-6 md:px-10">
           <div className="max-w-2xl">
-            <h2 className="font-serif-italic text-3xl leading-tight text-black md:text-5xl">
-              The Ivory Luxe <span className="font-serif not-italic font-normal">Experience</span>
-            </h2>
+            <Heading eyebrow="The Ivory Luxe" emphasis="Experience" />
             <p className="mt-5 text-sm leading-relaxed text-muted md:text-base">
               Your appointment should feel as beautiful as the final result. From the moment you
               arrive, our team takes the time to understand your preferences, guide you through the
@@ -50,9 +49,7 @@ export default function Experience() {
 
       <section className="pt-16 md:pt-20">
         <div className="mx-auto max-w-6xl px-6 md:px-10">
-          <h3 className="font-serif-italic text-3xl leading-tight text-black md:text-4xl">
-            Beauty with <span className="block">Intention</span>
-          </h3>
+          <Heading eyebrow="Beauty with" emphasis="Intention" />
           <dl className="mt-10 grid gap-8 md:grid-cols-2 md:gap-x-16 md:gap-y-10">
             {features.map((feature) => (
               <div key={feature.title}>

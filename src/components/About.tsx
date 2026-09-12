@@ -1,6 +1,7 @@
 import Image from "next/image";
 import luxuryBanner from "../../public/images/luxury-banner.jpg";
 import { TextLink } from "./Button";
+import Heading from "./Heading";
 
 export default function About() {
   return (
@@ -17,9 +18,7 @@ export default function About() {
         </div>
 
         <div>
-          <h2 className="font-serif-italic text-3xl leading-tight text-black md:text-5xl">
-            Luxury Beauty, <span className="block">Made Personal</span>
-          </h2>
+          <Heading eyebrow="Luxury Beauty," emphasis="Made Personal" />
           <p className="mt-5 max-w-md text-sm leading-relaxed text-muted md:text-base">
             At Ivory Luxe Salon, we believe true luxury is more than how you look, it is how you
             feel.

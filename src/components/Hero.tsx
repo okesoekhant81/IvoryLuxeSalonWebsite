@@ -1,6 +1,7 @@
 import Image from "next/image";
 import heroBg from "../../public/images/hero-bg.jpg";
 import { PrimaryCta } from "./Button";
+import Heading from "./Heading";
 
 export default function Hero() {
   return (
@@ -21,9 +22,7 @@ export default function Hero() {
           <p className="font-serif text-sm tracking-[0.15em] text-muted uppercase">
             Welcome to Ivory Luxe Salon
           </p>
-          <h1 className="mt-3 font-serif-italic text-4xl leading-tight text-black md:text-6xl">
-            Your Beauty <span className="block">Elevated</span>
-          </h1>
+          <Heading as="h1" size="hero" eyebrow="Your Beauty" emphasis="Elevated" className="mt-3" />
           <p className="mt-5 max-w-md text-sm leading-relaxed text-muted md:text-base">
             Step into a space where beauty feels personal. From polished everyday looks to
             special-occasion transformations, Ivory Luxe Salon delivers refined beauty services

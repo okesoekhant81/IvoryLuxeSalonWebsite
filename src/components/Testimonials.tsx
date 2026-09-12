@@ -2,6 +2,7 @@ import Image from "next/image";
 import beforeImg from "../../public/images/before-slider.png";
 import afterImg from "../../public/images/after-slider.png";
 import reviewerAvatar from "../../public/images/reviewer-avatar.jpg";
+import Heading from "./Heading";
 
 const review = `I recently visited Ivory Luxe Salon for hair coloring and a scalp treatment, and the experience exceeded my expectations. I simply showed the color I had in mind, and the stylist brought it to life in a way that was even better than I imagined. His knowledge of products and ability to customize the color truly stood out.
 
@@ -50,10 +51,8 @@ export default function Testimonials() {
 
         <div className="mt-14 md:mt-20 md:grid md:grid-cols-[1fr_1.4fr] md:gap-16">
           <div>
-            <h2 className="font-serif-italic text-3xl leading-tight text-black md:text-5xl">
-              Beautiful Experiences, <span className="block">Shared</span>
-            </h2>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted md:text-base">
+            <Heading eyebrow="Beautiful Experiences," emphasis="Shared" />
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted md:text-base">
               Discover why our clients trust Ivory Luxe Salon for their beauty moments.
             </p>
           </div>
