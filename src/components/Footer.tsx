@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="mt-20 border-t border-black/5 bg-white pb-24 pt-10 md:mt-28 md:pb-10">
+    <footer className="border-t border-black/5 bg-white pb-24 pt-10 md:pb-10">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <span className="font-serif-italic text-lg text-black">Ivory Luxe Salon</span>

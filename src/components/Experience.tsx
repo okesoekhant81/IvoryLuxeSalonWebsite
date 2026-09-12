@@ -23,7 +23,7 @@ const features = [
 export default function Experience() {
   return (
     <>
-      <section id="experience" className="mt-20 scroll-mt-20 bg-beige pt-16 md:mt-28 md:pt-24">
+      <section id="experience" className="scroll-mt-20 bg-beige pt-16 md:pt-20">
         <div className="mx-auto max-w-6xl px-6 md:px-10">
           <div className="max-w-2xl">
             <h2 className="font-serif-italic text-3xl leading-tight text-black md:text-5xl">
@@ -48,7 +48,7 @@ export default function Experience() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <section className="pt-16 md:pt-20">
         <div className="mx-auto max-w-6xl px-6 md:px-10">
           <h3 className="font-serif-italic text-3xl leading-tight text-black md:text-4xl">
             Beauty with <span className="block">Intention</span>
