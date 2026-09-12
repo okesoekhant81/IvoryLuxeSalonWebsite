@@ -22,25 +22,25 @@ export default function Testimonials() {
     <section id="testimonials" className="mt-20 scroll-mt-20 md:mt-28">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="relative h-[220px] overflow-hidden rounded-2xl md:h-[300px]">
+          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-beige">
             <Image
               src={beforeImg}
               alt="Before hair transformation at Ivory Luxe Salon"
               fill
               sizes="(min-width: 768px) 25vw, 50vw"
-              className="object-cover"
+              className="object-cover object-top"
             />
             <span className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-xs uppercase tracking-wide text-white">
               Before
             </span>
           </div>
-          <div className="relative h-[220px] overflow-hidden rounded-2xl md:h-[300px]">
+          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-beige">
             <Image
               src={afterImg}
               alt="After hair transformation at Ivory Luxe Salon"
               fill
               sizes="(min-width: 768px) 25vw, 50vw"
-              className="object-cover"
+              className="object-cover object-top"
             />
             <span className="absolute left-3 top-3 rounded-full bg-brown/80 px-3 py-1 text-xs uppercase tracking-wide text-white">
               After
