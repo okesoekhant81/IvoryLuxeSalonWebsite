@@ -1,11 +1,12 @@
 import Image from "next/image";
 import heroBg from "../../public/images/hero-bg.jpg";
+import { PrimaryCta } from "./Button";
 
 export default function Hero() {
   return (
     <section id="home" className="scroll-mt-20">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 pt-8 md:grid-cols-2 md:gap-16 md:px-10 md:pt-16">
-        <div className="relative order-1 h-[420px] w-full overflow-hidden rounded-2xl md:order-2 md:h-[560px]">
+        <div className="relative order-1 h-[420px] w-full animate-[fade-in_0.8s_ease-out] overflow-hidden rounded-2xl md:order-2 md:h-[560px]">
           <Image
             src={heroBg}
             alt="Stylist finishing a client's hair at Ivory Luxe Salon"
@@ -16,7 +17,7 @@ export default function Hero() {
           />
         </div>
 
-        <div className="order-2 md:order-1">
+        <div className="order-2 animate-[fade-in-up_0.8s_ease-out] md:order-1">
           <p className="font-serif text-sm tracking-[0.15em] text-muted uppercase">
             Welcome to Ivory Luxe Salon
           </p>
@@ -32,12 +33,9 @@ export default function Hero() {
             <p>M-33, Al Dana Centre, Al Maktoum Road, Al Rigga, Dubai</p>
             <p>11:00AM to 11:00PM (Every Day)</p>
           </div>
-          <a
-            href="#booking"
-            className="mt-8 inline-block font-serif-italic text-lg text-brown underline decoration-1 underline-offset-4 transition-opacity hover:opacity-70"
-          >
+          <PrimaryCta href="#booking" className="mt-8">
             Book Your Appointment
-          </a>
+          </PrimaryCta>
         </div>
       </div>
     </section>

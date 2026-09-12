@@ -1,6 +1,6 @@
 import Image from "next/image";
-import beforeImg from "../../public/images/before-slider.jpg";
-import afterImg from "../../public/images/after-slider.jpg";
+import beforeImg from "../../public/images/before-slider.png";
+import afterImg from "../../public/images/after-slider.png";
 import reviewerAvatar from "../../public/images/reviewer-avatar.jpg";
 
 const review = `I recently visited Ivory Luxe Salon for hair coloring and a scalp treatment, and the experience exceeded my expectations. I simply showed the color I had in mind, and the stylist brought it to life in a way that was even better than I imagined. His knowledge of products and ability to customize the color truly stood out.

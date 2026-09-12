@@ -4,16 +4,27 @@ import Services from "@/components/Services";
 import Experience from "@/components/Experience";
 import Testimonials from "@/components/Testimonials";
 import Visit from "@/components/Visit";
+import Reveal from "@/components/Reveal";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <About />
-      <Services />
-      <Experience />
-      <Testimonials />
-      <Visit />
+      <Reveal>
+        <About />
+      </Reveal>
+      <Reveal>
+        <Services />
+      </Reveal>
+      <Reveal>
+        <Experience />
+      </Reveal>
+      <Reveal>
+        <Testimonials />
+      </Reveal>
+      <Reveal>
+        <Visit />
+      </Reveal>
     </>
   );
 }

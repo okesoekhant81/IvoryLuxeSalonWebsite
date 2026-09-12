@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { OutlineCta } from "./Button";
 
 const links = [
   { href: "#home", label: "Home" },
@@ -10,24 +11,23 @@ const links = [
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 hidden md:block bg-white/90 backdrop-blur-sm border-b border-black/5">
+    <header className="sticky top-0 z-40 hidden border-b border-black/5 bg-white/90 backdrop-blur-sm transition-shadow duration-300 md:block">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-10">
         <Link href="#home" className="font-serif-italic text-xl text-black">
           Ivory Luxe Salon
         </Link>
         <nav className="flex items-center gap-8 text-sm text-black/70">
           {links.map((link) => (
-            <a key={link.href} href={link.href} className="transition-colors hover:text-brown">
+            <a
+              key={link.href}
+              href={link.href}
+              className="relative py-1 transition-colors duration-300 hover:text-brown after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-brown after:transition-all after:duration-300 hover:after:w-full"
+            >
               {link.label}
             </a>
           ))}
         </nav>
-        <a
-          href="#booking"
-          className="font-serif-italic rounded-full border border-brown px-5 py-2 text-sm text-brown transition-colors hover:bg-brown hover:text-white"
-        >
-          Book Your Appointment
-        </a>
+        <OutlineCta href="#booking">Book Your Appointment</OutlineCta>
       </div>
     </header>
   );

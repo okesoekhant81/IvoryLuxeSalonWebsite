@@ -1,17 +1,18 @@
 import Image from "next/image";
 import luxuryBanner from "../../public/images/luxury-banner.jpg";
+import { TextLink } from "./Button";
 
 export default function About() {
   return (
     <section className="mt-20 md:mt-28">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 md:grid-cols-2 md:gap-16 md:px-10">
-        <div className="relative h-[320px] w-full overflow-hidden rounded-2xl md:h-[440px]">
+        <div className="group relative h-[320px] w-full overflow-hidden rounded-2xl md:h-[440px]">
           <Image
             src={luxuryBanner}
             alt="Luxury interior of Ivory Luxe Salon"
             fill
             sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-cover"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </div>
 
@@ -29,12 +30,9 @@ export default function About() {
             Every appointment is designed to leave you feeling confident, refreshed and
             beautifully yourself.
           </p>
-          <a
-            href="#experience"
-            className="mt-6 inline-block font-serif-italic text-sm text-brown underline decoration-1 underline-offset-4 transition-opacity hover:opacity-70"
-          >
+          <TextLink href="#experience" className="mt-6 text-sm">
             Discover the Ivory Experience
-          </a>
+          </TextLink>
         </div>
       </div>
     </section>

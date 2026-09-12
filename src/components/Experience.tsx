@@ -36,13 +36,13 @@ export default function Experience() {
         </div>
 
         <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-16">
-          <div className="relative h-[320px] w-full overflow-hidden rounded-2xl md:h-full md:min-h-[440px]">
+          <div className="group relative h-[320px] w-full overflow-hidden rounded-2xl md:h-full md:min-h-[440px]">
             <Image
               src={experienceImg}
               alt="Ivory Luxe Salon interior and team"
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover"
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             />
           </div>
 
