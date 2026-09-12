@@ -35,7 +35,7 @@ const items = [
 
 export default function MobileNav() {
   return (
-    <nav className="fixed inset-x-4 bottom-4 z-40 flex items-center justify-around rounded-full border border-black/5 bg-white/80 py-3 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)] backdrop-blur-md md:hidden">
+    <nav className="fixed inset-x-4 bottom-4 z-40 flex items-center justify-around rounded-full border border-white/50 bg-white/50 py-3 shadow-[0px_8px_30px_0px_rgba(0,0,0,0.12)] backdrop-blur-xl backdrop-saturate-150 md:hidden">
       {items.map((item, index) => (
         <a
           key={item.href}
