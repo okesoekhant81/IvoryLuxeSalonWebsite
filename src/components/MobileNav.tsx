@@ -21,8 +21,9 @@ const items = [
     ),
   },
   {
-    href: "#booking",
+    href: "https://wa.me/971529866033",
     label: "Booking",
+    external: true,
     icon: (
       <>
         <rect x="4" y="5.5" width="16" height="15" rx="2" />
@@ -39,6 +40,7 @@ export default function MobileNav() {
         <a
           key={item.href}
           href={item.href}
+          {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
           className={`flex flex-col items-center gap-1 px-4 text-xs transition-colors duration-300 hover:text-brown ${
             index === 0 ? "text-black" : "text-black/60"
           }`}

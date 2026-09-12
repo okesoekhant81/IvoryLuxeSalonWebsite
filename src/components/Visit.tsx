@@ -1,5 +1,5 @@
 import Image from "next/image";
-import visitTeam from "../../public/images/visit-team.jpg";
+import visitTeam from "../../public/images/visit-team.png";
 import { PrimaryCta } from "./Button";
 
 const GOOGLE_MAPS_CID = "1898650786862607448";
@@ -9,13 +9,13 @@ export default function Visit() {
   return (
     <section id="visit" className="mt-20 scroll-mt-20 md:mt-28">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
-        <div className="group relative h-[260px] w-full overflow-hidden rounded-2xl md:h-[360px]">
+        <div className="group relative mx-auto aspect-[1600/1025] w-full max-w-2xl">
           <Image
             src={visitTeam}
             alt="The Ivory Luxe Salon team"
             fill
-            sizes="100vw"
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            sizes="(min-width: 768px) 42rem, 100vw"
+            className="object-contain transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </div>
 
