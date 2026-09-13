@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { OutlineCta } from "./Button";
+import ServicesDropdown from "./ServicesDropdown";
 
-const links = [
-  { href: "#home", label: "Home" },
-  { href: "#services", label: "Services" },
+const beforeLinks = [{ href: "#home", label: "Home" }];
+const afterLinks = [
   { href: "#experience", label: "Experience" },
   { href: "#testimonials", label: "Reviews" },
   { href: "#visit", label: "Visit" },
@@ -17,7 +17,17 @@ export default function Header() {
           Ivory Luxe Salon
         </Link>
         <nav className="flex items-center gap-8 text-sm text-black/70">
-          {links.map((link) => (
+          {beforeLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="relative py-1 transition-colors duration-300 hover:text-brown after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-brown after:transition-all after:duration-300 hover:after:w-full"
+            >
+              {link.label}
+            </a>
+          ))}
+          <ServicesDropdown />
+          {afterLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
