@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { WHATSAPP_LINK } from "@/lib/contact";
+
 const homeIcon = (
   <>
     <path d="M3 11.5 12 4l9 7.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -41,27 +44,31 @@ const items = [
   { href: "/services/hair", label: "Hair", icon: hairIcon },
   { href: "/services/nails", label: "Nails", icon: nailsIcon },
   { href: "/services/lashes", label: "Lashes", icon: lashesIcon },
-  { href: "https://wa.me/971529866033", label: "Booking", external: true, icon: bookingIcon },
+  { href: WHATSAPP_LINK, label: "Booking", external: true, icon: bookingIcon },
 ];
 
 export default function MobileNav() {
   return (
     <nav className="fixed inset-x-4 bottom-4 z-40 flex items-center justify-around rounded-full border border-white/50 bg-white/50 py-3 shadow-[0px_8px_30px_0px_rgba(0,0,0,0.12)] backdrop-blur-xl backdrop-saturate-150 md:hidden">
-      {items.map((item, index) => (
-        <a
-          key={item.href}
-          href={item.href}
-          aria-label={item.label}
-          {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          className={`px-3 py-1 transition-colors duration-300 hover:text-brown ${
-            index === 0 ? "text-black" : "text-black/60"
-          }`}
-        >
+      {items.map((item, index) => {
+        const className = `px-3 py-1 transition-colors duration-300 hover:text-brown ${
+          index === 0 ? "text-black" : "text-black/60"
+        }`;
+        const iconSvg = (
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             {item.icon}
           </svg>
-        </a>
-      ))}
+        );
+        return item.external ? (
+          <a key={item.href} href={item.href} aria-label={item.label} target="_blank" rel="noopener noreferrer" className={className}>
+            {iconSvg}
+          </a>
+        ) : (
+          <Link key={item.href} href={item.href} aria-label={item.label} className={className}>
+            {iconSvg}
+          </Link>
+        );
+      })}
     </nav>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ServicePageHero from "@/components/ServicePageHero";
 import ServiceCategoryList from "@/components/ServiceCategoryList";
 import { PrimaryCta } from "@/components/Button";
+import { WHATSAPP_LINK } from "@/lib/contact";
 import { nailsMenu } from "@/lib/services";
 import nailsService from "../../../../public/images/nails-service.jpg";
 
@@ -29,7 +30,7 @@ export default function NailsServicesPage() {
           <ServiceCategoryList categories={nailsMenu} />
         </div>
         <div className="mt-16 text-center">
-          <PrimaryCta href="https://wa.me/971529866033" target="_blank" rel="noopener noreferrer">
+          <PrimaryCta href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
             Book This Service
           </PrimaryCta>
         </div>

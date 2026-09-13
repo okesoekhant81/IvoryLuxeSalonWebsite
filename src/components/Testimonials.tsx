@@ -3,6 +3,8 @@ import beforeImg from "../../public/images/before-slider.png";
 import afterImg from "../../public/images/after-slider.png";
 import reviewerAvatar from "../../public/images/reviewer-avatar.jpg";
 import Heading from "./Heading";
+import { TextLink } from "./Button";
+import { GOOGLE_MAPS_LINK } from "@/lib/contact";
 
 const review = `I recently visited Ivory Luxe Salon for hair coloring and a scalp treatment, and the experience exceeded my expectations. I simply showed the color I had in mind, and the stylist brought it to life in a way that was even better than I imagined. His knowledge of products and ability to customize the color truly stood out.
 
@@ -55,6 +57,9 @@ export default function Testimonials() {
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted md:text-base">
               Discover why our clients trust Ivory Luxe Salon for their beauty moments.
             </p>
+            <TextLink href={GOOGLE_MAPS_LINK} target="_blank" rel="noopener noreferrer" className="mt-6 text-sm">
+              See all reviews on Google
+            </TextLink>
           </div>
 
           <div className="mt-8 md:mt-0">

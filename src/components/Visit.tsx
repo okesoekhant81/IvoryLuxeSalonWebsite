@@ -2,9 +2,7 @@ import Image from "next/image";
 import visitTeam from "../../public/images/visit-team.png";
 import { PrimaryCta } from "./Button";
 import Heading from "./Heading";
-
-const GOOGLE_MAPS_CID = "1898650786862607448";
-const GOOGLE_MAPS_LINK = "https://maps.app.goo.gl/u9dFQ24bkvQ7EDus5";
+import { GOOGLE_MAPS_CID, GOOGLE_MAPS_LINK, WHATSAPP_LINK } from "@/lib/contact";
 
 export default function Visit() {
   return (
@@ -57,7 +55,7 @@ export default function Visit() {
                 <dd>
                   Phone:{" "}
                   <a
-                    href="https://wa.me/971529866033"
+                    href={WHATSAPP_LINK}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline underline-offset-2 transition-colors duration-300 hover:text-brown"
@@ -81,7 +79,7 @@ export default function Visit() {
 
             <PrimaryCta
               id="booking"
-              href="https://wa.me/971529866033"
+              href={WHATSAPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-8 scroll-mt-24"
