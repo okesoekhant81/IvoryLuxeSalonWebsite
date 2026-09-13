@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import hairService from "../../public/images/hair-service.jpg";
 import nailsService from "../../public/images/nails-service.jpg";
 import lashesService from "../../public/images/lashes-service.jpg";
@@ -7,7 +8,8 @@ export default function Services() {
   return (
     <section id="services" className="mt-20 scroll-mt-20 md:mt-28">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
-        <div
+        <Link
+          href="/services/hair"
           id="hair"
           className="group relative block h-[380px] w-full scroll-mt-24 overflow-hidden rounded-2xl md:h-[460px]"
         >
@@ -22,10 +24,11 @@ export default function Services() {
           <h3 className="font-serif-italic absolute bottom-8 left-6 max-w-xs text-4xl leading-tight text-white md:bottom-10 md:left-10 md:text-5xl">
             Hair Cut And Treatments
           </h3>
-        </div>
+        </Link>
 
         <div className="mt-4 grid grid-cols-2 gap-4">
-          <div
+          <Link
+            href="/services/nails"
             id="nails"
             className="group relative block h-[280px] w-full scroll-mt-24 overflow-hidden rounded-2xl md:h-[340px]"
           >
@@ -41,9 +44,10 @@ export default function Services() {
               Nails
               <span className="block">Extension</span>
             </h3>
-          </div>
+          </Link>
 
-          <div
+          <Link
+            href="/services/lashes"
             id="lashes"
             className="group relative block h-[280px] w-full scroll-mt-24 overflow-hidden rounded-2xl md:h-[340px]"
           >
@@ -59,7 +63,7 @@ export default function Services() {
               Lashes
               <span className="block">Extension</span>
             </h3>
-          </div>
+          </Link>
         </div>
       </div>
     </section>

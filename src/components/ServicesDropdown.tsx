@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { serviceLinks } from "@/lib/services";
 
 export default function ServicesDropdown() {
@@ -22,15 +23,15 @@ export default function ServicesDropdown() {
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
-      <a
-        href="#services"
+      <Link
+        href="/#services"
         onClick={() => setOpen(false)}
         onFocus={() => setOpen(true)}
         aria-expanded={open}
         className="relative py-1 transition-colors duration-300 hover:text-brown after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-brown after:transition-all after:duration-300 hover:after:w-full"
       >
         Services
-      </a>
+      </Link>
 
       <div
         className={`absolute left-1/2 top-full z-50 mt-3 w-56 -translate-x-1/2 rounded-2xl border border-black/5 bg-white/95 p-2 shadow-[0px_12px_40px_0px_rgba(0,0,0,0.12)] backdrop-blur-md transition-all duration-200 ease-out ${
@@ -38,14 +39,14 @@ export default function ServicesDropdown() {
         }`}
       >
         {serviceLinks.map((link) => (
-          <a
+          <Link
             key={link.href}
             href={link.href}
             onClick={() => setOpen(false)}
             className="block rounded-xl px-4 py-2.5 font-serif-italic text-sm text-black transition-colors duration-200 hover:bg-beige hover:text-brown"
           >
             {link.label}
-          </a>
+          </Link>
         ))}
       </div>
     </div>
