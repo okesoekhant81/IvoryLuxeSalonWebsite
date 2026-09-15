@@ -1,3 +1,4 @@
+import SubmitButton from "@/components/admin/SubmitButton";
 import type { ServiceCategory, ServiceItem } from "@/lib/db-types";
 
 export default function ItemForm({
@@ -73,12 +74,9 @@ export default function ItemForm({
         />
       </div>
 
-      <button
-        type="submit"
-        className="rounded-full bg-brown px-6 py-2.5 font-serif-italic text-sm text-white transition-all duration-300 hover:bg-black"
-      >
+      <SubmitButton pendingLabel={item ? "Saving…" : "Adding…"}>
         {item ? "Save Changes" : "Add Service"}
-      </button>
+      </SubmitButton>
     </form>
   );
 }

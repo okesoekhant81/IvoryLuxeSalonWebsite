@@ -1,4 +1,5 @@
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import SubmitButton from "@/components/admin/SubmitButton";
 import type { Testimonial } from "@/lib/db-types";
 
 export default function TestimonialForm({
@@ -79,12 +80,9 @@ export default function TestimonialForm({
         Published (visible on the site)
       </label>
 
-      <button
-        type="submit"
-        className="rounded-full bg-brown px-6 py-2.5 font-serif-italic text-sm text-white transition-all duration-300 hover:bg-black"
-      >
+      <SubmitButton pendingLabel={testimonial ? "Saving…" : "Adding…"}>
         {testimonial ? "Save Changes" : "Add Testimonial"}
-      </button>
+      </SubmitButton>
     </form>
   );
 }

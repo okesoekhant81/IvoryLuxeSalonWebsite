@@ -1,6 +1,7 @@
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
+import SubmitButton from "@/components/admin/SubmitButton";
 
 async function loginAction(formData: FormData) {
   "use server";
@@ -63,12 +64,12 @@ export default async function AdminLoginPage({
               className="mt-1 w-full rounded-lg border border-black/10 px-3 py-2 text-sm text-black outline-none transition-colors focus:border-brown"
             />
           </div>
-          <button
-            type="submit"
-            className="w-full rounded-full bg-brown px-6 py-2.5 font-serif-italic text-sm text-white transition-all duration-300 hover:bg-black"
+          <SubmitButton
+            pendingLabel="Signing in…"
+            className="w-full rounded-full bg-brown px-6 py-2.5 font-serif-italic text-sm text-white transition-all duration-300 hover:bg-black disabled:opacity-60"
           >
             Sign In
-          </button>
+          </SubmitButton>
         </form>
       </div>
     </div>

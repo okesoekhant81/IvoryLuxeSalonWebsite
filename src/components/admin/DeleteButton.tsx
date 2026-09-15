@@ -1,7 +1,21 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useFormStatus } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
+
+function ConfirmButton({ label }: { label: string }) {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="rounded-full bg-red-600 px-4 py-2 text-sm text-white transition-colors hover:bg-red-700 disabled:opacity-60"
+    >
+      {pending ? "Deleting…" : label}
+    </button>
+  );
+}
 
 export default function DeleteButton({
   action,
@@ -15,14 +29,21 @@ export default function DeleteButton({
   triggerClassName?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
 
   return (
     <>
       <button type="button" onClick={() => setOpen(true)} className={triggerClassName}>
         {label}
       </button>
-      <form ref={formRef} action={action} className="hidden" />
 
       <AnimatePresence>
         {open && (
@@ -42,26 +63,19 @@ export default function DeleteButton({
               className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <p className="text-sm text-black">{confirmMessage}</p>
-              <div className="mt-5 flex justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="rounded-full border border-black/10 px-4 py-2 text-sm text-black/70 transition-colors hover:border-black/20"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOpen(false);
-                    formRef.current?.requestSubmit();
-                  }}
-                  className="rounded-full bg-red-600 px-4 py-2 text-sm text-white transition-colors hover:bg-red-700"
-                >
-                  {label}
-                </button>
-              </div>
+              <form action={action}>
+                <p className="text-sm text-black">{confirmMessage}</p>
+                <div className="mt-5 flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    className="rounded-full border border-black/10 px-4 py-2 text-sm text-black/70 transition-colors hover:border-black/20"
+                  >
+                    Cancel
+                  </button>
+                  <ConfirmButton label={label} />
+                </div>
+              </form>
             </motion.div>
           </motion.div>
         )}

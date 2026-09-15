@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import DeleteButton from "@/components/admin/DeleteButton";
+import FormActionButton from "@/components/admin/FormActionButton";
 import { restoreTestimonial, permanentlyDeleteTestimonial } from "@/lib/actions/testimonials";
 import {
   restoreCategory,
@@ -12,16 +13,7 @@ import { emptyTrash } from "@/lib/actions/trash";
 import type { Testimonial, ServiceCategory, ServiceItem, Booking } from "@/lib/db-types";
 
 function RestoreButton({ action }: { action: () => Promise<void> }) {
-  return (
-    <form action={action}>
-      <button
-        type="submit"
-        className="rounded-full border border-brown/30 px-3 py-1 text-xs text-brown transition-colors hover:bg-brown/10"
-      >
-        Restore
-      </button>
-    </form>
-  );
+  return <FormActionButton action={action} label="Restore" pendingLabel="Restoring…" />;
 }
 
 function Row({ children }: { children: React.ReactNode }) {

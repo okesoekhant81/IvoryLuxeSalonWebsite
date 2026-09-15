@@ -37,35 +37,46 @@ function Arrow({ direction }: { direction: "left" | "right" }) {
 
 export default function TestimonialsSlider({ testimonials }: { testimonials: Testimonial[] }) {
   const [index, setIndex] = useState(0);
+  const [restartKey, setRestartKey] = useState(0);
+  const [inView, setInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const count = testimonials.length;
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const goTo = useCallback(
     (i: number) => {
       if (count === 0) return;
       setIndex(((i % count) + count) % count);
+      setRestartKey((k) => k + 1);
     },
     [count],
   );
 
+  // Only start autoplay once the slider is actually on screen — it sits below
+  // the fold, so without this it could silently advance several slides before
+  // the visitor ever scrolls down to see it.
   useEffect(() => {
-    if (count <= 1) return;
-    timerRef.current = setInterval(() => setIndex((i) => (i + 1) % count), 6000);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [count]);
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.3 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
-  function restartAutoplay() {
-    if (timerRef.current) clearInterval(timerRef.current);
-    if (count <= 1) return;
-    timerRef.current = setInterval(() => setIndex((i) => (i + 1) % count), 6000);
-  }
+  useEffect(() => {
+    if (count <= 1 || !inView) return;
+    const timer = setInterval(() => {
+      if (document.visibilityState === "visible") setIndex((i) => (i + 1) % count);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [count, inView, restartKey]);
 
   if (count === 0) return null;
 
   return (
-    <div className="mt-8 md:mt-0">
+    <div ref={containerRef} className="mt-8 md:mt-0">
       <div className="overflow-hidden">
         <div
           className="flex transition-transform duration-500 ease-out"
@@ -103,10 +114,7 @@ export default function TestimonialsSlider({ testimonials }: { testimonials: Tes
           <button
             type="button"
             aria-label="Previous testimonial"
-            onClick={() => {
-              goTo(index - 1);
-              restartAutoplay();
-            }}
+            onClick={() => goTo(index - 1)}
             className="flex size-9 items-center justify-center rounded-full border border-black/10 text-black/60 transition-colors hover:border-brown hover:text-brown"
           >
             <Arrow direction="left" />
@@ -118,10 +126,7 @@ export default function TestimonialsSlider({ testimonials }: { testimonials: Tes
                 key={t.id}
                 type="button"
                 aria-label={`Go to testimonial ${i + 1}`}
-                onClick={() => {
-                  goTo(i);
-                  restartAutoplay();
-                }}
+                onClick={() => goTo(i)}
                 className={`h-1.5 rounded-full transition-all ${
                   i === index ? "w-6 bg-brown" : "w-1.5 bg-black/15 hover:bg-black/30"
                 }`}
@@ -132,10 +137,7 @@ export default function TestimonialsSlider({ testimonials }: { testimonials: Tes
           <button
             type="button"
             aria-label="Next testimonial"
-            onClick={() => {
-              goTo(index + 1);
-              restartAutoplay();
-            }}
+            onClick={() => goTo(index + 1)}
             className="flex size-9 items-center justify-center rounded-full border border-black/10 text-black/60 transition-colors hover:border-brown hover:text-brown"
           >
             <Arrow direction="right" />

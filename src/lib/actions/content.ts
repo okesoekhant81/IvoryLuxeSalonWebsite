@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { SITE_CONTENT_FIELDS } from "@/lib/site-content-fields";
 import { requireAdmin } from "@/lib/require-admin";
@@ -21,4 +22,5 @@ export async function updateSiteContent(formData: FormData) {
   revalidatePath("/services/hair");
   revalidatePath("/services/nails");
   revalidatePath("/services/lashes");
+  redirect("/admin/content?saved=1");
 }

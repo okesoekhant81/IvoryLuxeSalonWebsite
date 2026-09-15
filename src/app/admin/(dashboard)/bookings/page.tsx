@@ -2,6 +2,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { updateBookingStatus, deleteBooking } from "@/lib/actions/bookings";
 import DeleteButton from "@/components/admin/DeleteButton";
+import FormActionButton from "@/components/admin/FormActionButton";
 import type { Booking, BookingStatus } from "@/lib/db-types";
 
 const STATUS_TABS: { value: BookingStatus | "all"; label: string }[] = [
@@ -19,30 +20,6 @@ const STATUS_BADGE: Record<BookingStatus, string> = {
   cancelled: "bg-red-50 text-red-700",
 };
 
-function ActionButton({
-  action,
-  label,
-  tone = "default",
-}: {
-  action: () => Promise<void>;
-  label: string;
-  tone?: "default" | "danger";
-}) {
-  return (
-    <form action={action}>
-      <button
-        type="submit"
-        className={`rounded-full border px-3 py-1 text-xs transition-colors ${
-          tone === "danger"
-            ? "border-red-200 text-red-600 hover:bg-red-50"
-            : "border-brown/30 text-brown hover:bg-brown/10"
-        }`}
-      >
-        {label}
-      </button>
-    </form>
-  );
-}
 
 export default async function BookingsAdminPage({
   searchParams,
@@ -122,18 +99,18 @@ export default async function BookingsAdminPage({
             <div className="mt-4 flex flex-wrap items-center gap-2">
               {b.status === "pending" && (
                 <>
-                  <ActionButton action={updateBookingStatus.bind(null, b.id, "confirmed")} label="Confirm" />
-                  <ActionButton action={updateBookingStatus.bind(null, b.id, "cancelled")} label="Cancel" tone="danger" />
+                  <FormActionButton action={updateBookingStatus.bind(null, b.id, "confirmed")} label="Confirm" pendingLabel="Confirming…" />
+                  <FormActionButton action={updateBookingStatus.bind(null, b.id, "cancelled")} label="Cancel" pendingLabel="Cancelling…" tone="danger" />
                 </>
               )}
               {b.status === "confirmed" && (
                 <>
-                  <ActionButton action={updateBookingStatus.bind(null, b.id, "completed")} label="Mark Completed" />
-                  <ActionButton action={updateBookingStatus.bind(null, b.id, "cancelled")} label="Cancel" tone="danger" />
+                  <FormActionButton action={updateBookingStatus.bind(null, b.id, "completed")} label="Mark Completed" pendingLabel="Updating…" />
+                  <FormActionButton action={updateBookingStatus.bind(null, b.id, "cancelled")} label="Cancel" pendingLabel="Cancelling…" tone="danger" />
                 </>
               )}
               {b.status === "cancelled" && (
-                <ActionButton action={updateBookingStatus.bind(null, b.id, "pending")} label="Reopen" />
+                <FormActionButton action={updateBookingStatus.bind(null, b.id, "pending")} label="Reopen" pendingLabel="Reopening…" />
               )}
               <DeleteButton action={deleteBooking.bind(null, b.id)} confirmMessage="Delete this booking request?" />
             </div>

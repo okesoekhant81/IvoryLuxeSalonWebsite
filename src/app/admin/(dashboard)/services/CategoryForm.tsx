@@ -1,4 +1,5 @@
 import { SERVICE_PAGES } from "@/lib/service-pages";
+import SubmitButton from "@/components/admin/SubmitButton";
 import type { ServiceCategory } from "@/lib/db-types";
 
 export default function CategoryForm({
@@ -72,12 +73,9 @@ export default function CategoryForm({
         />
       </div>
 
-      <button
-        type="submit"
-        className="rounded-full bg-brown px-6 py-2.5 font-serif-italic text-sm text-white transition-all duration-300 hover:bg-black"
-      >
+      <SubmitButton pendingLabel={category ? "Saving…" : "Adding…"}>
         {category ? "Save Changes" : "Add Category"}
-      </button>
+      </SubmitButton>
     </form>
   );
 }
