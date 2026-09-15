@@ -6,6 +6,8 @@ import Testimonials from "@/components/Testimonials";
 import Visit from "@/components/Visit";
 import Reveal from "@/components/Reveal";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <>

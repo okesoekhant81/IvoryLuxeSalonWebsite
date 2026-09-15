@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { WHATSAPP_LINK } from "@/lib/contact";
+import { getSiteContent } from "@/lib/get-site-content";
 
 const homeIcon = (
   <>
@@ -39,15 +39,18 @@ const bookingIcon = (
   </>
 );
 
-const items = [
-  { href: "/#home", label: "Home", icon: homeIcon },
-  { href: "/services/hair", label: "Hair", icon: hairIcon },
-  { href: "/services/nails", label: "Nails", icon: nailsIcon },
-  { href: "/services/lashes", label: "Lashes", icon: lashesIcon },
-  { href: WHATSAPP_LINK, label: "Booking", external: true, icon: bookingIcon },
-];
+export default async function MobileNav() {
+  const content = await getSiteContent();
+  const whatsappLink = `https://wa.me/${content["contact.whatsapp"].replace(/[^0-9]/g, "")}`;
 
-export default function MobileNav() {
+  const items = [
+    { href: "/#home", label: "Home", icon: homeIcon },
+    { href: "/services/hair", label: "Hair", icon: hairIcon },
+    { href: "/services/nails", label: "Nails", icon: nailsIcon },
+    { href: "/services/lashes", label: "Lashes", icon: lashesIcon },
+    { href: whatsappLink, label: "Booking", external: true, icon: bookingIcon },
+  ];
+
   return (
     <nav className="fixed inset-x-4 bottom-4 z-40 flex items-center justify-around rounded-full border border-white/50 bg-white/50 py-3 shadow-[0px_8px_30px_0px_rgba(0,0,0,0.12)] backdrop-blur-xl backdrop-saturate-150 md:hidden">
       {items.map((item, index) => {

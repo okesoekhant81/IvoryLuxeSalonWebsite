@@ -1,16 +1,11 @@
 import Image from "next/image";
 import beforeImg from "../../public/images/before-slider.png";
 import afterImg from "../../public/images/after-slider.png";
-import reviewerAvatar from "../../public/images/reviewer-avatar.jpg";
 import Heading from "./Heading";
 import { TextLink } from "./Button";
 import { GOOGLE_MAPS_LINK } from "@/lib/contact";
-
-const review = `I recently visited Ivory Luxe Salon for hair coloring and a scalp treatment, and the experience exceeded my expectations. I simply showed the color I had in mind, and the stylist brought it to life in a way that was even better than I imagined. His knowledge of products and ability to customize the color truly stood out.
-
-The entire team was incredibly patient, attentive, and genuinely focused on making sure I was comfortable throughout the process. You can feel the care in every step. I also highly recommend their scalp treatment, it's both relaxing and effective.
-
-Overall, a solid 10/10 experience. Definitely a place I'd return to and recommend to anyone looking for quality hair care.`;
+import { supabase } from "@/lib/supabase";
+import type { Testimonial } from "@/lib/db-types";
 
 function Star() {
   return (
@@ -20,7 +15,23 @@ function Star() {
   );
 }
 
-export default function Testimonials() {
+function initials(name: string) {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
+
+export default async function Testimonials() {
+  const { data: testimonials } = await supabase
+    .from("Testimonial")
+    .select("*")
+    .eq("published", true)
+    .order("order", { ascending: true })
+    .returns<Testimonial[]>();
+
   return (
     <section id="testimonials" className="mt-20 scroll-mt-20 md:mt-28">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
@@ -62,23 +73,31 @@ export default function Testimonials() {
             </TextLink>
           </div>
 
-          <div className="mt-8 md:mt-0">
-            <div className="flex items-center gap-3">
-              <div className="relative size-10 overflow-hidden rounded-full">
-                <Image src={reviewerAvatar} alt="Win Eaindra Aung" fill sizes="40px" className="object-cover" />
-              </div>
-              <div>
-                <p className="font-serif text-sm text-black">Win Eaindra Aung</p>
-                <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} />
-                  ))}
+          <div className="mt-8 space-y-10 md:mt-0">
+            {(testimonials ?? []).map((t) => (
+              <div key={t.id}>
+                <div className="flex items-center gap-3">
+                  <div className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-beige text-xs font-medium text-brown">
+                    {t.avatarUrl ? (
+                      <Image src={t.avatarUrl} alt={t.name} fill sizes="40px" className="object-cover" />
+                    ) : (
+                      initials(t.name)
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-serif text-sm text-black">{t.name}</p>
+                    <div className="flex gap-0.5">
+                      {Array.from({ length: t.rating }).map((_, i) => (
+                        <Star key={i} />
+                      ))}
+                    </div>
+                  </div>
                 </div>
+                <p className="font-serif mt-5 whitespace-pre-line text-sm leading-relaxed text-black/80 md:text-base">
+                  {t.body}
+                </p>
               </div>
-            </div>
-            <p className="font-serif mt-5 whitespace-pre-line text-sm leading-relaxed text-black/80 md:text-base">
-              {review}
-            </p>
+            ))}
           </div>
         </div>
       </div>

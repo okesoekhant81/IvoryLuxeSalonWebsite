@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import ServicePageHero from "@/components/ServicePageHero";
 import ServiceCategoryList from "@/components/ServiceCategoryList";
 import { PrimaryCta } from "@/components/Button";
-import { WHATSAPP_LINK } from "@/lib/contact";
-import { nailsMenu } from "@/lib/services";
+import { getServiceMenu } from "@/lib/get-service-menu";
+import { getSiteContent } from "@/lib/get-site-content";
 import nailsService from "../../../../public/images/nails-service.jpg";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Nail Services | Ivory Luxe Salon",
@@ -12,7 +14,10 @@ export const metadata: Metadata = {
     "Explore Ivory Luxe Salon's full nail menu — extensions, nail art, classic manicures and pedicures, plus spa and waxing add-ons in Al Rigga, Dubai.",
 };
 
-export default function NailsServicesPage() {
+export default async function NailsServicesPage() {
+  const [nailsMenu, content] = await Promise.all([getServiceMenu("nails"), getSiteContent()]);
+  const whatsappLink = `https://wa.me/${content["contact.whatsapp"].replace(/[^0-9]/g, "")}`;
+
   return (
     <>
       <ServicePageHero
@@ -30,7 +35,7 @@ export default function NailsServicesPage() {
           <ServiceCategoryList categories={nailsMenu} />
         </div>
         <div className="mt-16 text-center">
-          <PrimaryCta href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
+          <PrimaryCta href={whatsappLink} target="_blank" rel="noopener noreferrer">
             Book This Service
           </PrimaryCta>
         </div>

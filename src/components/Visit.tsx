@@ -2,9 +2,15 @@ import Image from "next/image";
 import visitTeam from "../../public/images/visit-team.png";
 import { PrimaryCta } from "./Button";
 import Heading from "./Heading";
-import { GOOGLE_MAPS_CID, GOOGLE_MAPS_LINK, WHATSAPP_LINK } from "@/lib/contact";
+import { GOOGLE_MAPS_CID, GOOGLE_MAPS_LINK } from "@/lib/contact";
+import { getSiteContent } from "@/lib/get-site-content";
 
-export default function Visit() {
+export default async function Visit() {
+  const content = await getSiteContent();
+  const whatsappDigits = content["contact.whatsapp"].replace(/[^0-9]/g, "");
+  const phoneDigits = content["contact.phone"].replace(/[^0-9]/g, "");
+  const whatsappLink = `https://wa.me/${whatsappDigits}`;
+
   return (
     <section id="visit" className="mt-20 scroll-mt-20 md:mt-28">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
@@ -26,7 +32,7 @@ export default function Visit() {
               <div>
                 <dt className="font-serif-italic text-black">Address</dt>
                 <dd>
-                  M-33, Al Dana Centre, Al Maktoum Road, Al Rigga, Dubai.{" "}
+                  {content["contact.address"]}.{" "}
                   <a
                     href={GOOGLE_MAPS_LINK}
                     target="_blank"
@@ -39,14 +45,17 @@ export default function Visit() {
               </div>
               <div>
                 <dt className="font-serif-italic text-black">Opening Hours</dt>
-                <dd>11:00AM to 11:00PM (Mon - Sun)</dd>
+                <dd>{content["contact.hours"]}</dd>
               </div>
               <div>
                 <dt className="font-serif-italic text-black">Contact</dt>
                 <dd>
                   Phone:{" "}
-                  <a href="tel:+97145667874" className="underline underline-offset-2 transition-colors duration-300 hover:text-brown">
-                    04 566 7874
+                  <a
+                    href={`tel:+${phoneDigits}`}
+                    className="underline underline-offset-2 transition-colors duration-300 hover:text-brown"
+                  >
+                    {content["contact.phone"]}
                   </a>
                 </dd>
               </div>
@@ -55,12 +64,12 @@ export default function Visit() {
                 <dd>
                   Phone:{" "}
                   <a
-                    href={WHATSAPP_LINK}
+                    href={whatsappLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline underline-offset-2 transition-colors duration-300 hover:text-brown"
                   >
-                    +971 52 986 6033
+                    {content["contact.whatsapp"]}
                   </a>
                 </dd>
               </div>
@@ -68,10 +77,10 @@ export default function Visit() {
                 <dt className="font-serif-italic text-black">Email</dt>
                 <dd>
                   <a
-                    href="mailto:booking@theivoryluxe.com"
+                    href={`mailto:${content["contact.email"]}`}
                     className="underline underline-offset-2 transition-colors duration-300 hover:text-brown"
                   >
-                    booking@theivoryluxe.com
+                    {content["contact.email"]}
                   </a>
                 </dd>
               </div>
@@ -79,7 +88,7 @@ export default function Visit() {
 
             <PrimaryCta
               id="booking"
-              href={WHATSAPP_LINK}
+              href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-8 scroll-mt-24"

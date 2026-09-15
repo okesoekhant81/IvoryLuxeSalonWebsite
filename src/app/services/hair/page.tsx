@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import ServicePageHero from "@/components/ServicePageHero";
 import ServiceCategoryList from "@/components/ServiceCategoryList";
 import { PrimaryCta } from "@/components/Button";
-import { WHATSAPP_LINK } from "@/lib/contact";
-import { hairMenu } from "@/lib/services";
+import { getServiceMenu } from "@/lib/get-service-menu";
+import { getSiteContent } from "@/lib/get-site-content";
 import hairService from "../../../../public/images/hair-service.jpg";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Hair Services | Ivory Luxe Salon",
@@ -12,7 +14,10 @@ export const metadata: Metadata = {
     "Explore Ivory Luxe Salon's full hair menu — cuts, color, Framesi Morphosis therapy, smoothing, extensions, braids and gentlemen's grooming in Al Rigga, Dubai.",
 };
 
-export default function HairServicesPage() {
+export default async function HairServicesPage() {
+  const [hairMenu, content] = await Promise.all([getServiceMenu("hair"), getSiteContent()]);
+  const whatsappLink = `https://wa.me/${content["contact.whatsapp"].replace(/[^0-9]/g, "")}`;
+
   return (
     <>
       <ServicePageHero
@@ -30,7 +35,7 @@ export default function HairServicesPage() {
           <ServiceCategoryList categories={hairMenu} />
         </div>
         <div className="mt-16 text-center">
-          <PrimaryCta href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
+          <PrimaryCta href={whatsappLink} target="_blank" rel="noopener noreferrer">
             Book This Service
           </PrimaryCta>
         </div>

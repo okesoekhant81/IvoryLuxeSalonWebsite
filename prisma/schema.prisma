@@ -9,7 +9,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   username  String   @unique
   password  String
   name      String
@@ -18,7 +18,7 @@ model User {
 }
 
 model Testimonial {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   name      String
   rating    Int      @default(5)
   body      String
@@ -30,7 +30,7 @@ model Testimonial {
 }
 
 model ServiceCategory {
-  id          String        @id @default(cuid())
+  id          String        @id @default(uuid())
   page        String
   title       String
   description String
@@ -43,7 +43,7 @@ model ServiceCategory {
 }
 
 model ServiceItem {
-  id         String          @id @default(cuid())
+  id         String          @id @default(uuid())
   categoryId String
   category   ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   name       String

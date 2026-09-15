@@ -1,12 +1,17 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import { supabase } from "@/lib/supabase";
+
+async function count(table: string) {
+  const { count } = await supabase.from(table).select("*", { count: "exact", head: true });
+  return count ?? 0;
+}
 
 export default async function AdminOverviewPage() {
   const [testimonialCount, categoryCount, itemCount, userCount] = await Promise.all([
-    prisma.testimonial.count(),
-    prisma.serviceCategory.count(),
-    prisma.serviceItem.count(),
-    prisma.user.count(),
+    count("Testimonial"),
+    count("ServiceCategory"),
+    count("ServiceItem"),
+    count("User"),
   ]);
 
   const cards = [

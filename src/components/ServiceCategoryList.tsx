@@ -1,6 +1,6 @@
-import type { ServiceCategory } from "@/lib/services";
+import type { MenuCategory } from "@/lib/get-service-menu";
 
-export default function ServiceCategoryList({ categories }: { categories: ServiceCategory[] }) {
+export default function ServiceCategoryList({ categories }: { categories: MenuCategory[] }) {
   return (
     <div className="space-y-14">
       {categories.map((category) => (

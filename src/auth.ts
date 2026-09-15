@@ -1,11 +1,13 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import { prisma } from "@/lib/prisma";
+import { supabase } from "@/lib/supabase";
+import type { User } from "@/lib/db-types";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { strategy: "jwt" },
   pages: { signIn: "/admin/login" },
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {
@@ -17,7 +19,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const password = credentials?.password as string | undefined;
         if (!username || !password) return null;
 
-        const user = await prisma.user.findUnique({ where: { username } });
+        const { data: user } = await supabase
+          .from("User")
+          .select("*")
+          .eq("username", username)
+          .maybeSingle<User>();
         if (!user) return null;
 
         const valid = await bcrypt.compare(password, user.password);
