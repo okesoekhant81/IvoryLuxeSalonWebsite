@@ -4,35 +4,35 @@ import ServiceCategoryList from "@/components/ServiceCategoryList";
 import { PrimaryCta } from "@/components/Button";
 import { getServiceMenu } from "@/lib/get-service-menu";
 import { getSiteContent } from "@/lib/get-site-content";
-import nailsService from "../../../../public/images/nails-service.jpg";
+import lashesService from "../../../../../public/images/lashes-service.jpg";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Nail Services | Ivory Luxe Salon",
+  title: "Lash Services | Ivory Luxe Salon",
   description:
-    "Explore Ivory Luxe Salon's full nail menu — extensions, nail art, classic manicures and pedicures, plus spa and waxing add-ons in Al Rigga, Dubai.",
+    "Explore Ivory Luxe Salon's Russian volume lash menu — infills, lifting, natural classic, medium and mega volume in Al Rigga, Dubai.",
 };
 
-export default async function NailsServicesPage() {
-  const [nailsMenu, content] = await Promise.all([getServiceMenu("nails"), getSiteContent()]);
+export default async function LashesServicesPage() {
+  const [lashesMenu, content] = await Promise.all([getServiceMenu("lashes"), getSiteContent()]);
   const whatsappLink = `https://wa.me/${content["contact.whatsapp"].replace(/[^0-9]/g, "")}`;
 
   return (
     <>
       <ServicePageHero
-        image={nailsService}
-        alt="Nail extension service at Ivory Luxe Salon"
+        image={lashesService}
+        alt="Lash extension service at Ivory Luxe Salon"
         eyebrow="Our"
-        title="Nail Services"
+        title="Lash Services"
       />
       <section className="mx-auto max-w-4xl px-6 py-16 md:px-10 md:py-24">
         <p className="max-w-2xl text-sm leading-relaxed text-muted md:text-base">
-          From custom extensions and nail art to classic manicures and relaxing spa add-ons, our
-          nail team delivers durable, gorgeous results. Prices are inclusive of all services.
+          Ultra-light Russian volume techniques customised for lightweight, dramatic, or
+          natural-looking eyes. Prices are inclusive of all services.
         </p>
         <div className="mt-12">
-          <ServiceCategoryList categories={nailsMenu} />
+          <ServiceCategoryList categories={lashesMenu} />
         </div>
         <div className="mt-16 text-center">
           <PrimaryCta href={whatsappLink} target="_blank" rel="noopener noreferrer">

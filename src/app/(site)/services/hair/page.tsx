@@ -4,7 +4,7 @@ import ServiceCategoryList from "@/components/ServiceCategoryList";
 import { PrimaryCta } from "@/components/Button";
 import { getServiceMenu } from "@/lib/get-service-menu";
 import { getSiteContent } from "@/lib/get-site-content";
-import hairService from "../../../../public/images/hair-service.jpg";
+import hairService from "../../../../../public/images/hair-service.jpg";
 
 export const dynamic = "force-dynamic";
 
