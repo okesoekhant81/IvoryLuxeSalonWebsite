@@ -37,7 +37,7 @@ export default async function Hero() {
             <p>{content["contact.address"]}</p>
             <p>{content["contact.hours"]}</p>
           </div>
-          <PrimaryCta href="#booking" className="mt-8">
+          <PrimaryCta href="/book" className="mt-8">
             Book Your Appointment
           </PrimaryCta>
         </div>

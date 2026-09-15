@@ -55,3 +55,19 @@ model SiteContent {
   key   String @id
   value String
 }
+
+model Booking {
+  id             String   @id @default(uuid())
+  name           String
+  phone          String
+  email          String?
+  service        String?
+  preferredDate  String?
+  preferredTime  String?
+  message        String?
+  status         String   @default("pending")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([status])
+}

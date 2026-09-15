@@ -86,13 +86,7 @@ export default async function Visit() {
               </div>
             </dl>
 
-            <PrimaryCta
-              id="booking"
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 scroll-mt-24"
-            >
+            <PrimaryCta href="/book" className="mt-8">
               Book Your Appointment
             </PrimaryCta>
           </div>

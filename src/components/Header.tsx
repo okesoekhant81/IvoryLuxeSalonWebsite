@@ -37,7 +37,7 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <OutlineCta href="/#booking">Book Your Appointment</OutlineCta>
+        <OutlineCta href="/book">Book Your Appointment</OutlineCta>
       </div>
     </header>
   );

@@ -41,3 +41,19 @@ export type SiteContent = {
   key: string;
   value: string;
 };
+
+export type BookingStatus = "pending" | "confirmed" | "cancelled" | "completed";
+
+export type Booking = {
+  id: string;
+  name: string;
+  phone: string;
+  email: string | null;
+  service: string | null;
+  preferredDate: string | null;
+  preferredTime: string | null;
+  message: string | null;
+  status: BookingStatus;
+  createdAt: string;
+  updatedAt: string;
+};

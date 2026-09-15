@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { getSiteContent } from "@/lib/get-site-content";
 
 const homeIcon = (
   <>
@@ -39,16 +38,13 @@ const bookingIcon = (
   </>
 );
 
-export default async function MobileNav() {
-  const content = await getSiteContent();
-  const whatsappLink = `https://wa.me/${content["contact.whatsapp"].replace(/[^0-9]/g, "")}`;
-
+export default function MobileNav() {
   const items = [
     { href: "/#home", label: "Home", icon: homeIcon },
     { href: "/services/hair", label: "Hair", icon: hairIcon },
     { href: "/services/nails", label: "Nails", icon: nailsIcon },
     { href: "/services/lashes", label: "Lashes", icon: lashesIcon },
-    { href: whatsappLink, label: "Booking", external: true, icon: bookingIcon },
+    { href: "/book", label: "Booking", icon: bookingIcon },
   ];
 
   return (
@@ -62,11 +58,7 @@ export default async function MobileNav() {
             {item.icon}
           </svg>
         );
-        return item.external ? (
-          <a key={item.href} href={item.href} aria-label={item.label} target="_blank" rel="noopener noreferrer" className={className}>
-            {iconSvg}
-          </a>
-        ) : (
+        return (
           <Link key={item.href} href={item.href} aria-label={item.label} className={className}>
             {iconSvg}
           </Link>

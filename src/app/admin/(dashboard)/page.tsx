@@ -6,8 +6,17 @@ async function count(table: string) {
   return count ?? 0;
 }
 
+async function pendingBookingCount() {
+  const { count } = await supabase
+    .from("Booking")
+    .select("*", { count: "exact", head: true })
+    .eq("status", "pending");
+  return count ?? 0;
+}
+
 export default async function AdminOverviewPage() {
-  const [testimonialCount, categoryCount, itemCount, userCount] = await Promise.all([
+  const [bookingCount, testimonialCount, categoryCount, itemCount, userCount] = await Promise.all([
+    pendingBookingCount(),
     count("Testimonial"),
     count("ServiceCategory"),
     count("ServiceItem"),
@@ -15,6 +24,7 @@ export default async function AdminOverviewPage() {
   ]);
 
   const cards = [
+    { label: "Pending Bookings", value: bookingCount, href: "/admin/bookings" },
     { label: "Testimonials", value: testimonialCount, href: "/admin/testimonials" },
     { label: "Service Categories", value: categoryCount, href: "/admin/services" },
     { label: "Service Items", value: itemCount, href: "/admin/services" },
@@ -26,7 +36,7 @@ export default async function AdminOverviewPage() {
       <h1 className="font-serif-italic text-2xl text-black md:text-3xl">Overview</h1>
       <p className="mt-1 text-sm text-muted">Manage what appears on theivoryluxe.ae.</p>
 
-      <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
         {cards.map((card) => (
           <Link
             key={card.label}
