@@ -6,20 +6,29 @@ async function count(table: string) {
   return count ?? 0;
 }
 
+async function countActive(table: string) {
+  const { count } = await supabase
+    .from(table)
+    .select("*", { count: "exact", head: true })
+    .is("deletedAt", null);
+  return count ?? 0;
+}
+
 async function pendingBookingCount() {
   const { count } = await supabase
     .from("Booking")
     .select("*", { count: "exact", head: true })
-    .eq("status", "pending");
+    .eq("status", "pending")
+    .is("deletedAt", null);
   return count ?? 0;
 }
 
 export default async function AdminOverviewPage() {
   const [bookingCount, testimonialCount, categoryCount, itemCount, userCount] = await Promise.all([
     pendingBookingCount(),
-    count("Testimonial"),
-    count("ServiceCategory"),
-    count("ServiceItem"),
+    countActive("Testimonial"),
+    countActive("ServiceCategory"),
+    countActive("ServiceItem"),
     count("User"),
   ]);
 

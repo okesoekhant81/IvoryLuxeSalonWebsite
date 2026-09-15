@@ -10,10 +10,16 @@ export default async function ServicesAdminPage() {
     supabase
       .from("ServiceCategory")
       .select("*")
+      .is("deletedAt", null)
       .order("page", { ascending: true })
       .order("order", { ascending: true })
       .returns<ServiceCategory[]>(),
-    supabase.from("ServiceItem").select("*").order("order", { ascending: true }).returns<ServiceItem[]>(),
+    supabase
+      .from("ServiceItem")
+      .select("*")
+      .is("deletedAt", null)
+      .order("order", { ascending: true })
+      .returns<ServiceItem[]>(),
   ]);
 
   return (

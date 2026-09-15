@@ -13,6 +13,7 @@ export default async function NewItemPage({
   const { data: categories } = await supabase
     .from("ServiceCategory")
     .select("*")
+    .is("deletedAt", null)
     .order("page", { ascending: true })
     .order("order", { ascending: true })
     .returns<ServiceCategory[]>();

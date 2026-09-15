@@ -7,7 +7,8 @@ import { requireAdmin } from "@/lib/require-admin";
 
 function revalidateServices(page?: string) {
   revalidatePath("/admin/services");
-  revalidatePath("/#services");
+  revalidatePath("/admin/trash");
+  revalidatePath("/book");
   if (page) revalidatePath(`/services/${page}`);
   else {
     revalidatePath("/services/hair");
@@ -55,9 +56,32 @@ export async function updateCategory(id: string, formData: FormData) {
 export async function deleteCategory(id: string) {
   "use server";
   await requireAdmin();
-  const { error } = await supabase.from("ServiceCategory").delete().eq("id", id);
+  const { error } = await supabase
+    .from("ServiceCategory")
+    .update({ deletedAt: new Date().toISOString() })
+    .eq("id", id);
   if (error) throw new Error(error.message);
   revalidateServices();
+}
+
+export async function restoreCategory(id: string) {
+  "use server";
+  await requireAdmin();
+  const { error } = await supabase.from("ServiceCategory").update({ deletedAt: null }).eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateServices();
+}
+
+export async function permanentlyDeleteCategory(id: string) {
+  "use server";
+  await requireAdmin();
+  const { error } = await supabase
+    .from("ServiceCategory")
+    .delete()
+    .eq("id", id)
+    .not("deletedAt", "is", null);
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/trash");
 }
 
 export async function createItem(formData: FormData) {
@@ -96,7 +120,26 @@ export async function updateItem(id: string, formData: FormData) {
 export async function deleteItem(id: string) {
   "use server";
   await requireAdmin();
-  const { error } = await supabase.from("ServiceItem").delete().eq("id", id);
+  const { error } = await supabase
+    .from("ServiceItem")
+    .update({ deletedAt: new Date().toISOString() })
+    .eq("id", id);
   if (error) throw new Error(error.message);
   revalidateServices();
+}
+
+export async function restoreItem(id: string) {
+  "use server";
+  await requireAdmin();
+  const { error } = await supabase.from("ServiceItem").update({ deletedAt: null }).eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateServices();
+}
+
+export async function permanentlyDeleteItem(id: string) {
+  "use server";
+  await requireAdmin();
+  const { error } = await supabase.from("ServiceItem").delete().eq("id", id).not("deletedAt", "is", null);
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/trash");
 }

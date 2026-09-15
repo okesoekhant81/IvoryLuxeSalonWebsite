@@ -9,6 +9,7 @@ export default async function TestimonialsAdminPage() {
   const { data: testimonials } = await supabase
     .from("Testimonial")
     .select("*")
+    .is("deletedAt", null)
     .order("order", { ascending: true })
     .returns<Testimonial[]>();
 

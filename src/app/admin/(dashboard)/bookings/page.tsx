@@ -52,7 +52,7 @@ export default async function BookingsAdminPage({
   const { status } = await searchParams;
   const activeTab = (status ?? "pending") as BookingStatus | "all";
 
-  let query = supabase.from("Booking").select("*").order("createdAt", { ascending: false });
+  let query = supabase.from("Booking").select("*").is("deletedAt", null).order("createdAt", { ascending: false });
   if (activeTab !== "all") query = query.eq("status", activeTab);
   const { data: bookings } = await query.returns<Booking[]>();
 

@@ -21,7 +21,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="relative py-1 transition-colors duration-300 hover:text-brown after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-brown after:transition-all after:duration-300 hover:after:w-full"
+              className="relative touch-manipulation py-1 transition-colors duration-300 hover:text-brown active:text-brown after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-brown after:transition-all after:duration-300 hover:after:w-full active:after:w-full"
             >
               {link.label}
             </Link>
@@ -31,7 +31,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="relative py-1 transition-colors duration-300 hover:text-brown after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-brown after:transition-all after:duration-300 hover:after:w-full"
+              className="relative touch-manipulation py-1 transition-colors duration-300 hover:text-brown active:text-brown after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-brown after:transition-all after:duration-300 hover:after:w-full active:after:w-full"
             >
               {link.label}
             </Link>

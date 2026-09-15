@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { supabase } from "@/lib/supabase";
 import { requireAdmin } from "@/lib/require-admin";
 import { clientIp } from "@/lib/client-ip";
-import { checkSubmissionLimit, recordSubmission } from "@/lib/rate-limit";
+import { checkAndRecordSubmission } from "@/lib/rate-limit";
 import type { BookingStatus } from "@/lib/db-types";
 
 export type BookingActionState = { success: true } | { success: false; error: string } | null;
@@ -32,7 +32,7 @@ export async function createBooking(
   if (!name || !phone) return { success: false, error: "Name and phone are required." };
 
   const ip = await clientIp();
-  const { limited, retryAfterSeconds } = await checkSubmissionLimit("booking", ip);
+  const { limited, retryAfterSeconds } = await checkAndRecordSubmission("booking", ip);
   if (limited) {
     const minutes = Math.ceil(retryAfterSeconds / 60);
     return { success: false, error: `Too many requests. Please try again in ${minutes} minute(s).` };
@@ -52,7 +52,6 @@ export async function createBooking(
   });
   if (error) return { success: false, error: "Something went wrong. Please try again." };
 
-  await recordSubmission("booking", ip);
   revalidatePath("/admin/bookings");
   return { success: true };
 }
@@ -73,9 +72,33 @@ export async function updateBookingStatus(id: string, status: BookingStatus) {
 export async function deleteBooking(id: string) {
   "use server";
   await requireAdmin();
-  const { error } = await supabase.from("Booking").delete().eq("id", id);
+  const { error } = await supabase
+    .from("Booking")
+    .update({ deletedAt: new Date().toISOString() })
+    .eq("id", id);
   if (error) throw new Error(error.message);
 
   revalidatePath("/admin/bookings");
+  revalidatePath("/admin/trash");
   revalidatePath("/admin");
+}
+
+export async function restoreBooking(id: string) {
+  "use server";
+  await requireAdmin();
+  const { error } = await supabase.from("Booking").update({ deletedAt: null }).eq("id", id);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/bookings");
+  revalidatePath("/admin/trash");
+  revalidatePath("/admin");
+}
+
+export async function permanentlyDeleteBooking(id: string) {
+  "use server";
+  await requireAdmin();
+  const { error } = await supabase.from("Booking").delete().eq("id", id).not("deletedAt", "is", null);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/trash");
 }

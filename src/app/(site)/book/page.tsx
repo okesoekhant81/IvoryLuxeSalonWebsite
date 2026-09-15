@@ -5,7 +5,9 @@ import { createBooking } from "@/lib/actions/bookings";
 import { getAllServicesForBooking } from "@/lib/get-all-services";
 import { getSiteContent } from "@/lib/get-site-content";
 
-export const dynamic = "force-dynamic";
+// The service list and contact number rarely change; the booking submission
+// itself always runs live regardless of how this shell is cached.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Book Your Appointment | Ivory Luxe Salon",

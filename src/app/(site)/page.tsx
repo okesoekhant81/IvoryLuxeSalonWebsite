@@ -6,7 +6,9 @@ import Testimonials from "@/components/Testimonials";
 import Visit from "@/components/Visit";
 import Reveal from "@/components/Reveal";
 
-export const dynamic = "force-dynamic";
+// CMS edits invalidate this page immediately via revalidatePath() on save;
+// this is just a safety net for anything that misses that.
+export const revalidate = 300;
 
 export default function Home() {
   return (

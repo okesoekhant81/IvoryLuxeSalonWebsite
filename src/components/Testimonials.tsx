@@ -13,6 +13,7 @@ export default async function Testimonials() {
     .from("Testimonial")
     .select("*")
     .eq("published", true)
+    .is("deletedAt", null)
     .order("order", { ascending: true })
     .returns<Testimonial[]>();
 

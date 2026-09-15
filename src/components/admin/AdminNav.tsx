@@ -10,6 +10,7 @@ const navItems = [
   { href: "/admin/services", label: "Services & Pricing" },
   { href: "/admin/content", label: "Site Content" },
   { href: "/admin/users", label: "Staff Users" },
+  { href: "/admin/trash", label: "Trash" },
 ];
 
 function isActive(pathname: string, href: string) {

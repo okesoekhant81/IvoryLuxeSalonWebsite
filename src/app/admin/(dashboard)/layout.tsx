@@ -31,7 +31,7 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
         </div>
       </aside>
 
-      <div className="flex-1 px-6 py-8 md:px-10 md:py-10">
+      <div className="min-w-0 flex-1 px-6 py-8 md:px-10 md:py-10">
         <AdminNavMobile />
         {children}
       </div>

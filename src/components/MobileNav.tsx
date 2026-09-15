@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 
 const homeIcon = (
   <>
@@ -41,32 +42,36 @@ const bookingIcon = (
   </>
 );
 
+const items = [
+  { href: "/#home", match: "/", label: "Home", icon: homeIcon },
+  { href: "/services/hair", match: "/services/hair", label: "Hair", icon: hairIcon },
+  { href: "/services/nails", match: "/services/nails", label: "Nails", icon: nailsIcon },
+  { href: "/services/lashes", match: "/services/lashes", label: "Lashes", icon: lashesIcon },
+  { href: "/book", match: "/book", label: "Booking", icon: bookingIcon },
+];
+
 export default function MobileNav() {
   const pathname = usePathname();
   if (pathname === "/book") return null;
 
-  const items = [
-    { href: "/#home", label: "Home", icon: homeIcon },
-    { href: "/services/hair", label: "Hair", icon: hairIcon },
-    { href: "/services/nails", label: "Nails", icon: nailsIcon },
-    { href: "/services/lashes", label: "Lashes", icon: lashesIcon },
-    { href: "/book", label: "Booking", icon: bookingIcon },
-  ];
-
   return (
     <nav className="fixed inset-x-4 bottom-4 z-40 flex items-center justify-around rounded-full border border-white/50 bg-white/50 py-3 shadow-[0px_8px_30px_0px_rgba(0,0,0,0.12)] backdrop-blur-xl backdrop-saturate-150 md:hidden">
-      {items.map((item, index) => {
-        const className = `px-3 py-1 transition-colors duration-300 hover:text-brown ${
-          index === 0 ? "text-black" : "text-black/60"
-        }`;
+      {items.map((item) => {
+        const active = pathname === item.match;
         const iconSvg = (
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             {item.icon}
           </svg>
         );
         return (
-          <Link key={item.href} href={item.href} aria-label={item.label} className={className}>
-            {iconSvg}
+          <Link key={item.href} href={item.href} aria-label={item.label} className="touch-manipulation px-3 py-1">
+            <motion.span
+              whileTap={{ scale: 0.85 }}
+              transition={{ type: "spring", stiffness: 500, damping: 28 }}
+              className={`block transition-colors duration-200 ${active ? "text-brown" : "text-black/60"}`}
+            >
+              {iconSvg}
+            </motion.span>
           </Link>
         );
       })}

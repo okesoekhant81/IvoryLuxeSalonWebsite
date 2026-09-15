@@ -17,6 +17,7 @@ export type Testimonial = {
   order: number;
   createdAt: string;
   updatedAt: string;
+  deletedAt: string | null;
 };
 
 export type ServiceCategory = {
@@ -27,6 +28,7 @@ export type ServiceCategory = {
   order: number;
   createdAt: string;
   updatedAt: string;
+  deletedAt: string | null;
 };
 
 export type ServiceItem = {
@@ -35,6 +37,7 @@ export type ServiceItem = {
   name: string;
   price: string;
   order: number;
+  deletedAt: string | null;
 };
 
 export type SiteContent = {
@@ -56,4 +59,5 @@ export type Booking = {
   status: BookingStatus;
   createdAt: string;
   updatedAt: string;
+  deletedAt: string | null;
 };

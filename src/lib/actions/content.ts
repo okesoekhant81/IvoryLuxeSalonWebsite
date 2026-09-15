@@ -17,4 +17,8 @@ export async function updateSiteContent(formData: FormData) {
 
   revalidatePath("/admin/content");
   revalidatePath("/");
+  revalidatePath("/book");
+  revalidatePath("/services/hair");
+  revalidatePath("/services/nails");
+  revalidatePath("/services/lashes");
 }

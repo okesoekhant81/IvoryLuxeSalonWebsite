@@ -4,33 +4,30 @@ import { supabase } from "@/lib/supabase";
 const WINDOW_MS = 30 * 60 * 1000;
 const MAX_SUBMISSIONS = 5;
 
-export async function checkSubmissionLimit(bucket: string, ip: string) {
-  const cutoff = new Date(Date.now() - WINDOW_MS).toISOString();
-  await supabase.from("RateLimitEntry").delete().eq("bucket", bucket).eq("ip", ip).lt("createdAt", cutoff);
+type RpcResult = { limited: boolean; retry_after_seconds: number };
 
-  const { count } = await supabase
-    .from("RateLimitEntry")
-    .select("*", { count: "exact", head: true })
-    .eq("bucket", bucket)
-    .eq("ip", ip);
+// Delegates to the check_and_record_submission() Postgres function (see
+// prisma/migrations, applied manually), which does the count-check and the
+// insert inside one advisory-locked call. Doing this as a plain SELECT count
+// then INSERT here in application code would leave a race window where two
+// concurrent requests from the same IP both see a count under the limit and
+// both get admitted, over-running the limit.
+export async function checkAndRecordSubmission(bucket: string, ip: string) {
+  const { data, error } = await supabase
+    .rpc("check_and_record_submission", {
+      p_bucket: bucket,
+      p_ip: ip,
+      p_window_ms: WINDOW_MS,
+      p_max: MAX_SUBMISSIONS,
+    })
+    .single<RpcResult>();
 
-  if ((count ?? 0) >= MAX_SUBMISSIONS) {
-    const { data: oldest } = await supabase
-      .from("RateLimitEntry")
-      .select("createdAt")
-      .eq("bucket", bucket)
-      .eq("ip", ip)
-      .order("createdAt", { ascending: true })
-      .limit(1)
-      .maybeSingle<{ createdAt: string }>();
-    const retryAfterSeconds = oldest
-      ? Math.max(1, Math.ceil((new Date(oldest.createdAt).getTime() + WINDOW_MS - Date.now()) / 1000))
-      : 60;
-    return { limited: true as const, retryAfterSeconds };
+  if (error || !data) {
+    // Fail open: a broken rate limiter shouldn't block legitimate bookings.
+    return { limited: false as const };
+  }
+  if (data.limited) {
+    return { limited: true as const, retryAfterSeconds: data.retry_after_seconds };
   }
   return { limited: false as const };
-}
-
-export async function recordSubmission(bucket: string, ip: string) {
-  await supabase.from("RateLimitEntry").insert({ id: crypto.randomUUID(), bucket, ip });
 }

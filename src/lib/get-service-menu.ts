@@ -12,6 +12,7 @@ export async function getServiceMenu(page: string): Promise<MenuCategory[]> {
     .from("ServiceCategory")
     .select("*")
     .eq("page", page)
+    .is("deletedAt", null)
     .order("order", { ascending: true })
     .returns<DbCategory[]>();
 
@@ -24,6 +25,7 @@ export async function getServiceMenu(page: string): Promise<MenuCategory[]> {
       "categoryId",
       categories.map((c) => c.id)
     )
+    .is("deletedAt", null)
     .order("order", { ascending: true })
     .returns<DbItem[]>();
 

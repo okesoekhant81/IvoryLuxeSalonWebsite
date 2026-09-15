@@ -46,9 +46,33 @@ export async function updateTestimonial(id: string, formData: FormData) {
 export async function deleteTestimonial(id: string) {
   "use server";
   await requireAdmin();
-  const { error } = await supabase.from("Testimonial").delete().eq("id", id);
+  const { error } = await supabase
+    .from("Testimonial")
+    .update({ deletedAt: new Date().toISOString() })
+    .eq("id", id);
   if (error) throw new Error(error.message);
 
   revalidatePath("/admin/testimonials");
+  revalidatePath("/admin/trash");
   revalidatePath("/");
+}
+
+export async function restoreTestimonial(id: string) {
+  "use server";
+  await requireAdmin();
+  const { error } = await supabase.from("Testimonial").update({ deletedAt: null }).eq("id", id);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/testimonials");
+  revalidatePath("/admin/trash");
+  revalidatePath("/");
+}
+
+export async function permanentlyDeleteTestimonial(id: string) {
+  "use server";
+  await requireAdmin();
+  const { error } = await supabase.from("Testimonial").delete().eq("id", id).not("deletedAt", "is", null);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/trash");
 }

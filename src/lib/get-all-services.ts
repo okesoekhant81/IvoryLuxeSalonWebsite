@@ -15,8 +15,18 @@ export type ServiceGroup = {
 
 export async function getAllServicesForBooking(): Promise<ServiceGroup[]> {
   const [{ data: categories }, { data: items }] = await Promise.all([
-    supabase.from("ServiceCategory").select("*").order("order", { ascending: true }).returns<DbCategory[]>(),
-    supabase.from("ServiceItem").select("*").order("order", { ascending: true }).returns<DbItem[]>(),
+    supabase
+      .from("ServiceCategory")
+      .select("*")
+      .is("deletedAt", null)
+      .order("order", { ascending: true })
+      .returns<DbCategory[]>(),
+    supabase
+      .from("ServiceItem")
+      .select("*")
+      .is("deletedAt", null)
+      .order("order", { ascending: true })
+      .returns<DbItem[]>(),
   ]);
 
   return SERVICE_PAGES.map((p) => {

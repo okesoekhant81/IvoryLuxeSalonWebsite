@@ -12,6 +12,7 @@ export default async function EditItemPage({ params }: { params: Promise<{ id: s
     supabase
       .from("ServiceCategory")
       .select("*")
+      .is("deletedAt", null)
       .order("page", { ascending: true })
       .order("order", { ascending: true })
       .returns<ServiceCategory[]>(),

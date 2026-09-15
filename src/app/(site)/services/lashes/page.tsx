@@ -6,7 +6,9 @@ import { getServiceMenu } from "@/lib/get-service-menu";
 import { getSiteContent } from "@/lib/get-site-content";
 import lashesService from "../../../../../public/images/lashes-service.jpg";
 
-export const dynamic = "force-dynamic";
+// CMS edits invalidate this page immediately via revalidatePath() on save;
+// this is just a safety net for anything that misses that.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Lash Services | Ivory Luxe Salon",
