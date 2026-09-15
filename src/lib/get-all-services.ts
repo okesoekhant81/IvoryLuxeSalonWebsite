@@ -2,10 +2,15 @@ import { supabase } from "@/lib/supabase";
 import { SERVICE_PAGES } from "@/lib/service-pages";
 import type { ServiceCategory as DbCategory, ServiceItem as DbItem } from "@/lib/db-types";
 
+export type ServiceCategoryGroup = {
+  title: string;
+  items: string[];
+};
+
 export type ServiceGroup = {
   page: string;
   label: string;
-  items: string[];
+  categories: ServiceCategoryGroup[];
 };
 
 export async function getAllServicesForBooking(): Promise<ServiceGroup[]> {
@@ -15,8 +20,13 @@ export async function getAllServicesForBooking(): Promise<ServiceGroup[]> {
   ]);
 
   return SERVICE_PAGES.map((p) => {
-    const categoryIds = (categories ?? []).filter((c) => c.page === p.value).map((c) => c.id);
-    const pageItems = (items ?? []).filter((i) => categoryIds.includes(i.categoryId)).map((i) => i.name);
-    return { page: p.value, label: p.label, items: pageItems };
-  }).filter((group) => group.items.length > 0);
+    const pageCategories = (categories ?? []).filter((c) => c.page === p.value);
+    const categoryGroups = pageCategories
+      .map((c) => ({
+        title: c.title,
+        items: (items ?? []).filter((i) => i.categoryId === c.id).map((i) => i.name),
+      }))
+      .filter((group) => group.items.length > 0);
+    return { page: p.value, label: p.label, categories: categoryGroups };
+  }).filter((group) => group.categories.length > 0);
 }

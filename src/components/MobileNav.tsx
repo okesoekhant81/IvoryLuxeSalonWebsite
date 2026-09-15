@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const homeIcon = (
   <>
@@ -39,6 +42,9 @@ const bookingIcon = (
 );
 
 export default function MobileNav() {
+  const pathname = usePathname();
+  if (pathname === "/book") return null;
+
   const items = [
     { href: "/#home", label: "Home", icon: homeIcon },
     { href: "/services/hair", label: "Hair", icon: hairIcon },

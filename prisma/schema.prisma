@@ -71,3 +71,12 @@ model Booking {
 
   @@index([status])
 }
+
+model RateLimitEntry {
+  id        String   @id @default(uuid())
+  bucket    String
+  ip        String
+  createdAt DateTime @default(now())
+
+  @@index([bucket, ip])
+}

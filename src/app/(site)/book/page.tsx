@@ -12,12 +12,7 @@ export const metadata: Metadata = {
   description: "Request an appointment at Ivory Luxe Salon and our team will confirm your booking shortly.",
 };
 
-export default async function BookPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ submitted?: string }>;
-}) {
-  const { submitted } = await searchParams;
+export default async function BookPage() {
   const [serviceGroups, content] = await Promise.all([getAllServicesForBooking(), getSiteContent()]);
 
   return (
@@ -28,15 +23,6 @@ export default async function BookPage({
           Fill in your details below and our team will reach out on {content["contact.whatsapp"]} to confirm your
           appointment time.
         </p>
-
-        {submitted && (
-          <div className="mt-8 rounded-2xl border border-brown/20 bg-brown/5 p-5 text-sm text-black">
-            <p className="font-serif-italic text-lg text-brown">Thank you!</p>
-            <p className="mt-1 text-black/80">
-              Your booking request has been received. Our team will contact you shortly to confirm.
-            </p>
-          </div>
-        )}
 
         <BookingForm serviceGroups={serviceGroups} action={createBooking} />
       </div>

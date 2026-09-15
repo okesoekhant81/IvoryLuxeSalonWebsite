@@ -37,6 +37,8 @@ body {
 a,
 button {
   transition-timing-function: ease-out;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
