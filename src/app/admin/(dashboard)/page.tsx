@@ -31,7 +31,7 @@ export default async function AdminOverviewPage() {
           <Link
             key={card.label}
             href={card.href}
-            className="rounded-2xl border border-black/5 bg-white p-5 transition-colors hover:border-brown"
+            className="rounded-2xl border border-black/[0.06] bg-white p-5 shadow-sm transition-colors hover:border-brown"
           >
             <p className="font-serif-italic text-3xl text-brown">{card.value}</p>
             <p className="mt-1 text-sm text-black/70">{card.label}</p>

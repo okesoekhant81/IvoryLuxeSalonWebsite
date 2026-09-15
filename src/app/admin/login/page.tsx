@@ -26,8 +26,8 @@ export default async function AdminLoginPage({
   const { error } = await searchParams;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-beige px-6">
-      <div className="w-full max-w-sm rounded-2xl border border-black/5 bg-white p-8 shadow-[0px_12px_40px_0px_rgba(0,0,0,0.08)]">
+    <div className="flex min-h-screen items-center justify-center bg-[#fafafa] px-6">
+      <div className="w-full max-w-sm rounded-2xl border border-black/[0.06] bg-white p-8 shadow-[0px_12px_40px_0px_rgba(0,0,0,0.06)]">
         <p className="font-serif-italic text-2xl text-black">Ivory Luxe Salon</p>
         <p className="mt-1 text-sm text-muted">Admin sign in</p>
 

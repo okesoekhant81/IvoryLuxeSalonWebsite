@@ -39,7 +39,7 @@ export default async function ServicesAdminPage() {
               {pageCategories.map((category) => {
                 const categoryItems = (items ?? []).filter((i) => i.categoryId === category.id);
                 return (
-                  <div key={category.id} className="rounded-2xl border border-black/5 bg-white p-5">
+                  <div key={category.id} className="rounded-2xl border border-black/[0.06] bg-white p-5 shadow-sm">
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="font-serif-italic text-lg text-black">{category.title}</p>
@@ -59,7 +59,7 @@ export default async function ServicesAdminPage() {
                       </div>
                     </div>
 
-                    <div className="mt-4 divide-y divide-black/5 border-t border-black/5">
+                    <div className="mt-4 divide-y divide-black/[0.06] border-t border-black/[0.06]">
                       {categoryItems.map((item) => (
                         <div key={item.id} className="flex items-center justify-between gap-4 py-2">
                           <span className="text-sm text-black">{item.name}</span>
